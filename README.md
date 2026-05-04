@@ -19,24 +19,30 @@ Disk_Tool is a professional, interactive CLI utility for Linux systems designed 
 To set up Disk_Tool as a global command on your system, follow these steps:
 
 ### 1. Clone the Repository
+'''bash
 git clone https://github.com/Arya-S-Patil/disk-tool.git
 cd disk-tool
-
+'''
 ### 2. Set Permissions
 Make the script executable so it can be run by the system:
+'''bash
 chmod +x disk_tool.sh
-
+'''
 ### 3. Move to Local Bin
 Relocate the script to your local binary folder and rename it for a cleaner command experience:
+'''bash
 mkdir -p ~/.local/bin
 mv disk_tool.sh ~/.local/bin/disk_tool
-
+'''
 ### 4. Update Your PATH
 Ensure your shell knows where to find the tool by adding this line to your ~/.bashrc or ~/.zshrc:
+'''bash
 export PATH="$HOME/.local/bin:$PATH"
-
-Run 'source ~/.bashrc' to apply the changes immediately.
-
+'''
+Run the following to apply the changes immediately.
+'''bash
+source ~/.bashrc
+'''
 ---
 
 ## Usage
