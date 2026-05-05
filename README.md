@@ -22,8 +22,8 @@ To set up Disk_Tool as a global command on your system, follow these steps:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/Arya-S-Patil/disk-tool.git
-cd disk-tool
+git clone https://github.com/Arya-S-Patil/disk_tool.git
+cd disk_tool
 ```
 
 ### 2. Set Permissions
