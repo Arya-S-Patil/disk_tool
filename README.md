@@ -42,6 +42,7 @@ Relocate the script to your local binary folder and rename it for a cleaner comm
 mkdir -p ~/.local/bin
 mv disk_tool.sh ~/.local/bin/disk_tool
 ```
+Note you can have your own short command instead of disk tool by just changing here ~/.local/bin/(New name)
 
 ### 4. Update Your PATH
 
