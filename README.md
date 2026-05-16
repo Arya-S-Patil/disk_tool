@@ -43,7 +43,7 @@ mkdir -p ~/.local/bin
 mv disk_tool.sh ~/.local/bin/disk_tool
 ```
 Note you can have your own short command instead of disk_tool by just changing here
-``` bash ~/.local/bin/(New name)```
+``` ~/.local/bin/(New name)```
 
 For development or customization it is better to actually set up a symlink instead of manually moving the file to the bin again so use the following.
 
