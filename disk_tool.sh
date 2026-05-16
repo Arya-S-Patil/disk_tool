@@ -57,7 +57,8 @@ case $ACTION in
         sudo mkfs.exfat -n "$VOL_NAME" ${TARGET}1
         ;;
     3)
-        read -p "Enter path to ISO file: " ISO_PATH
+        read -e -p "Enter path to ISO file: " ISO_PATH
+       #  read -p "Enter path to ISO file: " ISO_PATH
         echo "Flashing $ISO_PATH to $TARGET..."
         sudo dd if="$ISO_PATH" of="$TARGET" bs=4M status=progress conv=fsync
         ;;
