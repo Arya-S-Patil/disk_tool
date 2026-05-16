@@ -42,8 +42,15 @@ Relocate the script to your local binary folder and rename it for a cleaner comm
 mkdir -p ~/.local/bin
 mv disk_tool.sh ~/.local/bin/disk_tool
 ```
-Note you can have your own short command instead of disk_tool by just changing here ~/.local/bin/(New name)
+Note you can have your own short command instead of disk_tool by just changing here
+``` bash ~/.local/bin/(New name)```
 
+For development or customization it is better to actually set up a symlink instead of manually moving the file to the bin again so use the following.
+
+```bash
+chmod +x ~/Desktop/disk_tool/disk_tool.sh
+ln -s ~/Desktop/disk_tool/disk_tool.sh ~/.local/bin/disk_tool
+```
 ### 4. Update Your PATH
 
 Ensure your shell knows where to find the tool by adding this line to your `~/.bashrc` or `~/.zshrc`:
