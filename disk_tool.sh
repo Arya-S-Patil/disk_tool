@@ -15,7 +15,7 @@ lsblk -o NAME,SIZE,TYPE,TRAN,LABEL | grep 'usb'
 echo "------------------------------------"
 
 # 2. SELECT DISK
-read -p "Enter the disk name to target (e.g., sda): " DISK_NAME
+read -r -p "Enter the disk name to target (e.g., sda): " DISK_NAME
 TARGET="/dev/$DISK_NAME"
 
 if [ ! -b "$TARGET" ]; then
@@ -29,10 +29,10 @@ echo "1) Format as FAT32 (Universal)"
 echo "2) Format as exFAT (Large Files)"
 echo "3) Create Bootable Drive (Flash ISO)"
 echo "4) Deep Wipe (Fix Stubborn Drive)"
-read -p "Choice [1-4]: " ACTION
+read -r -p "Choice [1-4]: " ACTION
 
 # --- SAFETY CONFIRMATION ---
-read -p "WARNING: All data on $TARGET will be destroyed. Proceed? (y/N): " CONFIRM
+read -r -p "WARNING: All data on $TARGET will be destroyed. Proceed? (y/N): " CONFIRM
 if [[ ! "$CONFIRM" =~ ^[yY]$ ]]; then
     echo "Operation cancelled."
     exit 1
@@ -41,24 +41,23 @@ fi
 # 4. EXECUTION
 case $ACTION in
     1)
-        read -p "Enter volume name (Label): " VOL_NAME
+        read -r -p "Enter volume name (Label): " VOL_NAME
         echo "Formatting $TARGET as FAT32 with label: $VOL_NAME..."
-        sudo umount ${TARGET}* 2>/dev/null
-        sudo parted $TARGET mklabel msdos
-        sudo parted -a optimal $TARGET mkpart primary fat32 0% 100%
-        sudo mkfs.vfat -F 32 -n "$VOL_NAME" ${TARGET}1
+        sudo umount "${TARGET}"* 2>/dev/null
+        sudo parted "$TARGET" mklabel msdos
+        sudo parted -a optimal "$TARGET" mkpart primary fat32 0% 100%
+        sudo mkfs.vfat -F 32 -n "$VOL_NAME" "${TARGET}"1
         ;;
     2)
-        read -p "Enter volume name (Label): " VOL_NAME
+        read -r -p "Enter volume name (Label): " VOL_NAME
         echo "Formatting $TARGET as exFAT with label: $VOL_NAME..."
-        sudo umount ${TARGET}* 2>/dev/null
-        sudo parted $TARGET mklabel gpt
-        sudo parted -a optimal $TARGET mkpart primary exfat 0% 100%
-        sudo mkfs.exfat -n "$VOL_NAME" ${TARGET}1
+        sudo umount "${TARGET}"* 2>/dev/null
+        sudo parted "$TARGET" mklabel gpt
+        sudo parted -a optimal "$TARGET" mkpart primary exfat 0% 100%
+        sudo mkfs.exfat -n "$VOL_NAME" "${TARGET}"1
         ;;
     3)
-        read -e -p "Enter path to ISO file: " ISO_PATH
-       #  read -p "Enter path to ISO file: " ISO_PATH
+        read -e -r -p "Enter path to ISO file: " ISO_PATH
         echo "Flashing $ISO_PATH to $TARGET..."
         sudo dd if="$ISO_PATH" of="$TARGET" bs=4M status=progress conv=fsync
         ;;
