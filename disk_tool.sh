@@ -27,9 +27,10 @@ fi
 echo "Select Action for $TARGET:"
 echo "1) Format as FAT32 (Universal)"
 echo "2) Format as exFAT (Large Files)"
-echo "3) Create Bootable Drive (Flash ISO)"
-echo "4) Deep Wipe (Fix Stubborn Drive)"
-read -r -p "Choice [1-4]: " ACTION
+echo "3) Format as ext4  (Standard Linux Filesystem)"
+echo "4) Create Bootable Drive (Flash ISO)"
+echo "5) Deep Wipe (Fix Stubborn Drive)"
+read -r -p "Choice [1-5]: " ACTION
 
 # --- SAFETY CONFIRMATION ---
 read -r -p "WARNING: All data on $TARGET will be destroyed. Proceed? (y/N): " CONFIRM
@@ -57,11 +58,19 @@ case $ACTION in
         sudo mkfs.exfat -n "$VOL_NAME" "${TARGET}"1
         ;;
     3)
+        read -r -p "Enter volume name (Label): " VOL_NAME
+        echo "Formatting $TARGET as ext4 with label: $VOL_NAME..."
+        sudo umount "${TARGET}"* 2>/dev/null
+        sudo parted "$TARGET" mklabel msdos
+        sudo parted -a optimal "$TARGET" mkpart primary ext4 0% 100%
+        sudo mkfs.ext4 -L "$VOL_NAME" "${TARGET}"1
+        ;;
+    4)
         read -e -r -p "Enter path to ISO file: " ISO_PATH
         echo "Flashing $ISO_PATH to $TARGET..."
         sudo dd if="$ISO_PATH" of="$TARGET" bs=4M status=progress conv=fsync
         ;;
-    4)
+    5)
         echo "Performing Deep Wipe on $TARGET..."
         sudo wipefs -a "$TARGET"
         sudo dd if=/dev/zero of="$TARGET" bs=1M count=100
